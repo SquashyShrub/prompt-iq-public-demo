@@ -2,10 +2,15 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-- Planned: e.g. Target system features scheduled for the active sprint.
-- Staged: e.g. Unit testing for core logic
+- Planned: 
+- Staged: 
 
-## - 2026-05-19  |  version: 0.0.0
+## - 2026-05-18  |  version: 0.0.0
 ### Added
-- **Feature**:
 - **Docs**: 
+    - DESIGN.md
+    - STRATEGY.md
+### Updated
+- **Docs**:
+    - README.md
+    - CHANGELOG.md
