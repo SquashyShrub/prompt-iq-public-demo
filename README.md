@@ -1,33 +1,13 @@
 # PromptIQ
-**Current Version:** `v0.0.0` | **Last Updated:** *still in development*  
-> One sentence describing the core technical utility.
+Current Version: v0.1.0
 
-![Visual Proof Asset](docs/screenshot)
+PromptIQ is an AI-assisted prompt optimization platform currently in active development.
 
----
+## Status
+Phase 1 complete:
+- Frontend UI foundation
+- Reusable component architecture
+- Prompt input flow
+- Empty results workflow
 
-### Overview
-
-
-### Tech Stack
-
-
-### Key Features
-- **[Feature 1]**: 
-- **[Feature 2]**: 
-- **[Feature 3]**: 
-
-### Engineering Challenge
-- **Problem:** 
-- **Solution:** 
-
-- **Problem:** 
-- **Solution:** 
-
-- **Problem:** 
-- **Solution:** 
-
-### Installation & Usage
-1. Clone the repo: `git clone [url]`
-2. Open in [IDE Name].
-3. Press `F5` or `Run` to execute.
+README documentation will be expanded at v1.0.0.

@@ -34,7 +34,7 @@ The platform focuses not only on improving prompts, but also teaching users WHY 
 
 ---
 
-##4. Core Screens
+## 4. Core Screens
 
 ### Main Prompt Screen
 Contains:
