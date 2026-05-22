@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ImproveButton } from "@/components/ImproveButton";
 
 const MAX_CHARACTERS = 500;
 const TEXTAREA_ID = "weak-prompt-input";
@@ -61,13 +62,7 @@ export function WeakPromptTextArea() {
           </p>
         </div>
 
-        <button
-          type="button"
-          disabled
-          className="w-full rounded-lg bg-zinc-900 px-6 py-3 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:self-start"
-        >
-          Optimize Prompt
-        </button>
+        <ImproveButton />
       </div>
     </section>
   );
