@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { improvePrompt } from "@/services/PromptService";
+import type { PromptRequest } from "@/types/prompt";
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -25,10 +27,17 @@ export async function POST(request: Request) {
     );
   }
 
-  return NextResponse.json({
-    optimizedPrompt: "This is a placeholder optimized prompt.",
-    score: null,
-    explanation:
-      "OpenAI integration will be added in a later Phase 2 step.",
-  });
+  const promptRequest: PromptRequest = {
+    prompt: (body as { prompt: string }).prompt,
+  };
+
+  try {
+    const result = await improvePrompt(promptRequest);
+    return NextResponse.json(result);
+  } catch {
+    return NextResponse.json(
+      { error: "Failed to improve prompt" },
+      { status: 500 },
+    );
+  }
 }
