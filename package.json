@@ -6,10 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:types": "tsc --noEmit",
+    "check:lint": "eslint",
+    "check": "npm run check:types && npm run check:lint"
   },
   "dependencies": {
     "next": "^15.5.0",
+    "openai": "^6.39.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

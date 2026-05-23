@@ -1,10 +1,27 @@
 import { PromptResult } from "@/components/PromptResult";
+import type { PromptResult as PromptResultData } from "@/types/prompt";
 
-export function EmptyResultsArea() {
+export type EmptyResultsAreaProps = {
+  result?: PromptResultData | null;
+  error?: string | null;
+  isLoading?: boolean;
+};
+
+export function EmptyResultsArea({
+  result = null,
+  error = null,
+  isLoading = false,
+}: EmptyResultsAreaProps) {
+  const hasResult =
+    result !== null &&
+    result.originalPrompt.trim() !== "" &&
+    result.optimizedPrompt.trim() !== "";
+
   return (
     <section
       className="px-6 pb-16 pt-0 sm:px-8"
       aria-labelledby="results-section-heading"
+      aria-busy={isLoading}
     >
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
         <h2
@@ -13,7 +30,26 @@ export function EmptyResultsArea() {
         >
           Results
         </h2>
-        <PromptResult />
+
+        {isLoading && (
+          <p
+            className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-600"
+            role="status"
+          >
+            Optimizing your prompt…
+          </p>
+        )}
+
+        {error && !isLoading && (
+          <p
+            className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800"
+            role="alert"
+          >
+            {error}
+          </p>
+        )}
+
+        <PromptResult data={hasResult ? result : null} />
       </div>
     </section>
   );

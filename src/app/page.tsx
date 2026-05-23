@@ -1,13 +1,11 @@
-import { EmptyResultsArea } from "@/components/EmptyResultsArea";
 import { LandingHeading } from "@/components/LandingHeading";
-import { WeakPromptTextArea } from "@/components/WeakPromptTextArea";
+import { PromptOptimizer } from "@/components/PromptOptimizer";
 
 export default function Home() {
   return (
     <main>
       <LandingHeading />
-      <WeakPromptTextArea />
-      <EmptyResultsArea />
+      <PromptOptimizer />
     </main>
   );
 }
