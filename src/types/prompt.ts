@@ -3,7 +3,10 @@ export type PromptRequest = {
 };
 
 export type PromptResult = {
+  originalPrompt: string;
   optimizedPrompt: string;
-  score: number | null;
+  originalScore: number;
+  improvedScore: number;
   explanation: string;
+  techniquesUsed: string[];
 };

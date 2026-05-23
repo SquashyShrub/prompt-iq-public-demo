@@ -1,12 +1,3 @@
-import type { PromptResult } from "@/types/prompt";
-
-export async function optimizePrompt(prompt: string): Promise<PromptResult> {
-  void prompt;
-
-  return {
-    optimizedPrompt: "This is a placeholder optimized prompt.",
-    score: null,
-    explanation:
-      "OpenAI integration will be added in a later Phase 2 step.",
-  };
+export async function optimizePrompt(prompt: string): Promise<string> {
+  return `Create a clear, structured response for the following request: ${prompt}. Include relevant context, constraints, and an organized output format.`;
 }
