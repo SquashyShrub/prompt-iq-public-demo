@@ -88,13 +88,21 @@ PromptIQ is an AI-assisted prompt optimization platform that helps users transfo
 ## Current Architecture
 
 Frontend UI
+
 ↓
+
 API Route (/api/improve-prompt)
+
 ↓
+
 PromptService
+
 ↓
+
 OpenAIService
+
 ↓
+
 Optimization Engine
 
 ---
