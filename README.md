@@ -1,7 +1,7 @@
 # PromptIQ
 
-Current Version: v0.4.0-alpha  
-Last Updated: 2026-05-22
+Current Version: v0.5.0-pre  
+Last Updated: 2026-05-26
 
 PromptIQ is an AI-assisted prompt optimization platform that helps users transform weak prompts into structured, higher-performing prompts while teaching prompt engineering principles.
 
