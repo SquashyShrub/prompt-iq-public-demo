@@ -96,6 +96,8 @@ export function PromptOptimizer() {
         result={result}
         error={error}
         isLoading={isLoading}
+        onTryAgain={handleSubmit}
+        canTryAgain={prompt.trim().length > 0}
       />
     </>
   );

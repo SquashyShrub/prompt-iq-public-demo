@@ -5,17 +5,22 @@ export type EmptyResultsAreaProps = {
   result?: PromptResultData | null;
   error?: string | null;
   isLoading?: boolean;
+  onTryAgain?: () => void;
+  canTryAgain?: boolean;
 };
 
 export function EmptyResultsArea({
   result = null,
   error = null,
   isLoading = false,
+  onTryAgain,
+  canTryAgain = false,
 }: EmptyResultsAreaProps) {
   const hasResult =
     result !== null &&
     result.originalPrompt.trim() !== "" &&
     result.optimizedPrompt.trim() !== "";
+  const showTryAgain = (hasResult || error !== null) && typeof onTryAgain === "function";
 
   return (
     <section
@@ -50,6 +55,19 @@ export function EmptyResultsArea({
         )}
 
         <PromptResult data={hasResult ? result : null} />
+
+        {showTryAgain && (
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={onTryAgain}
+              disabled={!canTryAgain || isLoading}
+              className="rounded-lg border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-900 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 enabled:hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Try Again
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

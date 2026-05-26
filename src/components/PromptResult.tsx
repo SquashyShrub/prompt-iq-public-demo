@@ -24,7 +24,7 @@ export function PromptResult({ data }: PromptResultProps) {
           </h3>
           <div className="flex flex-wrap items-center gap-2">
             <ScoreBadge />
-          <CopyButton disabled />
+            <CopyButton disabled label="Copy Improved Prompt" />
         </div>
       </header>
       <p className="text-base leading-relaxed text-zinc-500">
@@ -43,7 +43,11 @@ export function PromptResult({ data }: PromptResultProps) {
         <div className="flex flex-wrap items-center gap-2">
           <ScoreBadge score={data.originalScore} label="Before" />
           <ScoreBadge score={data.improvedScore} label="After" />
-          <CopyButton text={data.optimizedPrompt} disabled={false} />
+          <CopyButton
+            text={toCopyablePromptBody(data.optimizedPrompt)}
+            disabled={false}
+            label="Copy Improved Prompt"
+          />
         </div>
       </header>
 
@@ -107,5 +111,23 @@ export function PromptResult({ data }: PromptResultProps) {
         </section>
       </div>
     </article>
+  );
+}
+
+function toCopyablePromptBody(optimizedPrompt: string): string {
+  return optimizedPrompt
+    .split(/\r?\n/)
+    .filter((line) => !isStructuredHeading(line))
+    .join("\n")
+    .trim();
+}
+
+function isStructuredHeading(line: string): boolean {
+  const normalized = line.trim().toLowerCase();
+  return (
+    normalized === "## task" ||
+    normalized === "## context" ||
+    normalized === "## constraints" ||
+    normalized === "## output format"
   );
 }
