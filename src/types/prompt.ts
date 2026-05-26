@@ -1,5 +1,7 @@
 export type PromptRequest = {
   prompt: string;
+  attempt?: number;
+  previousImprovedScore?: number;
 };
 
 export type PromptImprovementCategory = {
@@ -19,3 +21,10 @@ export type PromptResult = {
 };
 
 export type StructuredPromptOptimizationResponse = PromptResult;
+
+export type PromptHistoryItem = {
+  id: string;
+  timestamp: number;
+  result: PromptResult;
+  editableOptimizedPrompt: string;
+};
