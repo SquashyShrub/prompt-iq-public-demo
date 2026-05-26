@@ -1,5 +1,7 @@
 export type PromptRequest = {
   prompt: string;
+  attempt?: number;
+  previousImprovedScore?: number;
 };
 
 export type PromptImprovementCategory = {

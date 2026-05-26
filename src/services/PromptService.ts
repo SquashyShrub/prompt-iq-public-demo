@@ -3,14 +3,11 @@ import type {
   PromptRequest,
   PromptResult,
 } from "@/types/prompt";
-import { optimizePrompt } from "@/services/OpenAIService";
-
-const PLACEHOLDER_TECHNIQUES = [
-  "Task clarification",
-  "Context framing",
-  "Output formatting",
-  "Constraint definition",
-] as const;
+import {
+  getTechniquesForAttempt,
+  getVariantIndex,
+  optimizePrompt,
+} from "@/services/OpenAIService";
 
 const TASK_PATTERN =
   /\b(create|write|explain|analyze|list|generate|describe|summarize|compare|design|build|help|make|provide|draft)\b/;
@@ -24,29 +21,61 @@ const CONSTRAINT_PATTERN =
 const FORMAT_PATTERN =
   /\b(format|list|table|json|bullet|paragraph|steps|outline|structure|organized|section)\b/;
 
+const VARIANT_LABELS = [
+  "balanced structure",
+  "detailed instructional style",
+  "concise action-oriented style",
+  "role-based expert framing",
+] as const;
+
 export async function improvePrompt(
   request: PromptRequest,
 ): Promise<PromptResult> {
   const sanitized = request.prompt.trim();
+  const attempt =
+    typeof request.attempt === "number" && request.attempt >= 0
+      ? Math.floor(request.attempt)
+      : 0;
 
   if (sanitized === "") {
     throw new Error("prompt is required and must be a non-empty string");
   }
 
-  const techniquesUsed = [...PLACEHOLDER_TECHNIQUES];
-  const optimizedPrompt = await optimizePrompt(sanitized, techniquesUsed);
+  const techniquesUsed = getTechniquesForAttempt(attempt);
+  const optimizedPrompt = await optimizePrompt(sanitized, techniquesUsed, attempt);
   const originalScore = scorePrompt(sanitized);
-  const improvedScore = scorePrompt(optimizedPrompt);
+  const rawImprovedScore = scorePrompt(optimizedPrompt);
+  const improvedScore = stabilizeImprovedScore(
+    originalScore,
+    rawImprovedScore,
+    request.previousImprovedScore,
+  );
 
   return normalizePromptResult({
     originalPrompt: sanitized,
     optimizedPrompt,
     originalScore,
     improvedScore,
-    explanation: buildExplanation(originalScore, improvedScore),
+    explanation: buildExplanation(originalScore, improvedScore, attempt),
     techniquesUsed,
     improvementCategories: buildImprovementCategories(sanitized, optimizedPrompt),
   });
+}
+
+function stabilizeImprovedScore(
+  originalScore: number,
+  improvedScore: number,
+  previousImprovedScore?: number,
+): number {
+  const minFromOriginal = Math.min(100, originalScore + 10);
+  let stabilized = Math.max(improvedScore, minFromOriginal);
+
+  if (previousImprovedScore !== undefined) {
+    const minFromPrevious = Math.max(0, previousImprovedScore - 10);
+    stabilized = Math.max(stabilized, minFromPrevious);
+  }
+
+  return clampScore(stabilized);
 }
 
 function scorePrompt(prompt: string): number {
@@ -236,9 +265,15 @@ function impactForSpecificity(
   return "low";
 }
 
-function buildExplanation(originalScore: number, improvedScore: number): string {
+function buildExplanation(
+  originalScore: number,
+  improvedScore: number,
+  attempt: number,
+): string {
+  const variantLabel = VARIANT_LABELS[getVariantIndex(attempt)];
+
   return [
-    `Your original prompt scored ${originalScore}/100. The improved version scores ${improvedScore}/100.`,
+    `Your original prompt scored ${originalScore}/100. This attempt uses a ${variantLabel} and scores ${improvedScore}/100.`,
     "The improved prompt adds structure so the model knows exactly what to produce.",
     "It clarifies the core task instead of leaving the request vague.",
     "It encourages relevant context and constraints so answers stay focused.",

@@ -26,6 +26,7 @@ function isPromptResult(value: unknown): value is PromptResult {
 
 export function PromptOptimizer() {
   const [prompt, setPrompt] = useState("");
+  const [attempt, setAttempt] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<PromptResult | null>(null);
@@ -34,10 +35,11 @@ export function PromptOptimizer() {
     const nextValue = event.target.value;
     if (nextValue.length <= MAX_CHARACTERS) {
       setPrompt(nextValue);
+      setAttempt(0);
     }
   }
 
-  async function handleSubmit() {
+  async function submitWithAttempt(submitAttempt: number) {
     const trimmedPrompt = prompt.trim();
     if (!trimmedPrompt || isLoading) return;
 
@@ -48,7 +50,11 @@ export function PromptOptimizer() {
       const response = await fetch("/api/improve-prompt", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: trimmedPrompt }),
+        body: JSON.stringify({
+          prompt: trimmedPrompt,
+          attempt: submitAttempt,
+          previousImprovedScore: result?.improvedScore,
+        }),
       });
 
       const data: unknown = await response.json();
@@ -73,6 +79,7 @@ export function PromptOptimizer() {
       }
 
       setResult(data);
+      setAttempt(submitAttempt);
       setError(null);
     } catch {
       setResult(null);
@@ -82,6 +89,16 @@ export function PromptOptimizer() {
     } finally {
       setIsLoading(false);
     }
+  }
+
+  function handleSubmit() {
+    setAttempt(0);
+    void submitWithAttempt(0);
+  }
+
+  function handleTryAgain() {
+    const nextAttempt = attempt + 1;
+    void submitWithAttempt(nextAttempt);
   }
 
   return (
@@ -96,7 +113,7 @@ export function PromptOptimizer() {
         result={result}
         error={error}
         isLoading={isLoading}
-        onTryAgain={handleSubmit}
+        onTryAgain={handleTryAgain}
         canTryAgain={prompt.trim().length > 0}
       />
     </>

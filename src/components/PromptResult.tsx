@@ -128,6 +128,9 @@ function isStructuredHeading(line: string): boolean {
     normalized === "## task" ||
     normalized === "## context" ||
     normalized === "## constraints" ||
-    normalized === "## output format"
+    normalized === "## output format" ||
+    normalized === "## role" ||
+    normalized === "## tone" ||
+    normalized === "## success criteria"
   );
 }

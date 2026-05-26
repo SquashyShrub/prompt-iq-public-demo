@@ -2,6 +2,20 @@ import { NextResponse } from "next/server";
 import { improvePrompt } from "@/services/PromptService";
 import type { PromptRequest } from "@/types/prompt";
 
+function parseAttempt(value: unknown): number {
+  if (typeof value !== "number" || !Number.isFinite(value) || value < 0) {
+    return 0;
+  }
+  return Math.floor(value);
+}
+
+function parsePreviousImprovedScore(value: unknown): number | undefined {
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    return undefined;
+  }
+  return Math.max(0, Math.min(100, Math.round(value)));
+}
+
 export async function POST(request: Request) {
   let body: unknown;
 
@@ -27,8 +41,14 @@ export async function POST(request: Request) {
     );
   }
 
+  const record = body as Record<string, unknown>;
+
   const promptRequest: PromptRequest = {
-    prompt: (body as { prompt: string }).prompt,
+    prompt: (record.prompt as string).trim(),
+    attempt: parseAttempt(record.attempt),
+    previousImprovedScore: parsePreviousImprovedScore(
+      record.previousImprovedScore,
+    ),
   };
 
   try {
