@@ -5,6 +5,9 @@ export type EmptyResultsAreaProps = {
   result?: PromptResultData | null;
   error?: string | null;
   isLoading?: boolean;
+  editableOptimizedPrompt?: string;
+  onEditableOptimizedPromptChange?: (value: string) => void;
+  displayImprovedScore?: number | null;
   onTryAgain?: () => void;
   canTryAgain?: boolean;
 };
@@ -13,6 +16,9 @@ export function EmptyResultsArea({
   result = null,
   error = null,
   isLoading = false,
+  editableOptimizedPrompt = "",
+  onEditableOptimizedPromptChange,
+  displayImprovedScore = null,
   onTryAgain,
   canTryAgain = false,
 }: EmptyResultsAreaProps) {
@@ -54,7 +60,13 @@ export function EmptyResultsArea({
           </p>
         )}
 
-        <PromptResult data={hasResult ? result : null} />
+        <PromptResult
+          data={hasResult ? result : null}
+          editableOptimizedPrompt={editableOptimizedPrompt}
+          onEditableOptimizedPromptChange={onEditableOptimizedPromptChange}
+          displayImprovedScore={displayImprovedScore}
+          isEditableDisabled={isLoading}
+        />
 
         {showTryAgain && (
           <div className="flex flex-wrap items-center gap-3">

@@ -8,6 +8,7 @@ import {
   getVariantIndex,
   optimizePrompt,
 } from "@/services/OpenAIService";
+import { clampScore, scorePrompt } from "@/services/promptScoring";
 
 const TASK_PATTERN =
   /\b(create|write|explain|analyze|list|generate|describe|summarize|compare|design|build|help|make|provide|draft)\b/;
@@ -78,23 +79,6 @@ function stabilizeImprovedScore(
   return clampScore(stabilized);
 }
 
-function scorePrompt(prompt: string): number {
-  const text = prompt.trim().toLowerCase();
-  let score = 10;
-
-  const wordCount = text.split(/\s+/).filter(Boolean).length;
-  if (wordCount >= 5) score += 5;
-  if (wordCount >= 15) score += 10;
-  if (wordCount >= 30) score += 10;
-
-  if (TASK_PATTERN.test(text)) score += 20;
-  if (CONTEXT_PATTERN.test(text)) score += 20;
-  if (CONSTRAINT_PATTERN.test(text)) score += 15;
-  if (FORMAT_PATTERN.test(text)) score += 20;
-
-  return Math.min(100, score);
-}
-
 function normalizePromptResult(value: unknown): PromptResult {
   const fallbackOriginalPrompt = "";
   const fallbackOptimizedPrompt = "";
@@ -126,8 +110,8 @@ function normalizePromptResult(value: unknown): PromptResult {
         ? originalPrompt
         : fallbackOptimizedPrompt;
 
-  const originalScore = clampScore(record.originalScore);
-  const improvedScore = clampScore(record.improvedScore);
+  const originalScore = clampScoreValue(record.originalScore);
+  const improvedScore = clampScoreValue(record.improvedScore);
 
   const explanation =
     typeof record.explanation === "string" && record.explanation.trim() !== ""
@@ -153,10 +137,9 @@ function normalizePromptResult(value: unknown): PromptResult {
   };
 }
 
-function clampScore(value: unknown): number {
+function clampScoreValue(value: unknown): number {
   if (typeof value !== "number" || Number.isNaN(value)) return 0;
-  if (!Number.isFinite(value)) return 0;
-  return Math.max(0, Math.min(100, Math.round(value)));
+  return clampScore(value);
 }
 
 function isStringArray(value: unknown): value is string[] {

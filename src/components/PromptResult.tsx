@@ -2,13 +2,25 @@ import { BeforeAfterComparison } from "@/components/BeforeAfterComparison";
 import { CopyButton } from "@/components/CopyButton";
 import { ImprovementCategories } from "@/components/ImprovementCategories";
 import { ScoreBadge } from "@/components/ScoreBadge";
+import { ScoreInfoTooltip } from "@/components/ScoreInfoTooltip";
+import { toCopyablePromptBody } from "@/components/promptTextUtils";
 import type { PromptResult as PromptResultData } from "@/types/prompt";
 
 export type PromptResultProps = {
   data?: PromptResultData | null;
+  editableOptimizedPrompt?: string;
+  onEditableOptimizedPromptChange?: (value: string) => void;
+  displayImprovedScore?: number | null;
+  isEditableDisabled?: boolean;
 };
 
-export function PromptResult({ data }: PromptResultProps) {
+export function PromptResult({
+  data,
+  editableOptimizedPrompt = "",
+  onEditableOptimizedPromptChange,
+  displayImprovedScore = null,
+  isEditableDisabled = false,
+}: PromptResultProps) {
   const hasResult =
     data !== undefined &&
     data !== null &&
@@ -19,32 +31,41 @@ export function PromptResult({ data }: PromptResultProps) {
     return (
       <article className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
         <header className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-          <h3 className="text-lg font-semibold tracking-tight text-zinc-900">
-            Optimized Prompt
-          </h3>
+          <div className="flex items-center gap-2">
+            <ScoreInfoTooltip />
+            <h3 className="text-lg font-semibold tracking-tight text-zinc-900">
+              Optimized Prompt
+            </h3>
+          </div>
           <div className="flex flex-wrap items-center gap-2">
             <ScoreBadge />
             <CopyButton disabled label="Copy Improved Prompt" />
-        </div>
-      </header>
-      <p className="text-base leading-relaxed text-zinc-500">
+          </div>
+        </header>
+        <p className="text-base leading-relaxed text-zinc-500">
           Your improved prompt will appear here after optimization.
         </p>
       </article>
     );
   }
 
+  const copyText = toCopyablePromptBody(editableOptimizedPrompt);
+  const afterScore = displayImprovedScore ?? data.improvedScore;
+
   return (
     <article className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
       <header className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <h3 className="text-lg font-semibold tracking-tight text-zinc-900">
-          Prompt Optimization Results
-        </h3>
+        <div className="flex items-center gap-2">
+          <ScoreInfoTooltip />
+          <h3 className="text-lg font-semibold tracking-tight text-zinc-900">
+            Prompt Optimization Results
+          </h3>
+        </div>
         <div className="flex flex-wrap items-center gap-2">
           <ScoreBadge score={data.originalScore} label="Before" />
-          <ScoreBadge score={data.improvedScore} label="After" />
+          <ScoreBadge score={afterScore} label="After" />
           <CopyButton
-            text={toCopyablePromptBody(data.optimizedPrompt)}
+            text={copyText}
             disabled={false}
             label="Copy Improved Prompt"
           />
@@ -61,7 +82,11 @@ export function PromptResult({ data }: PromptResultProps) {
           </h4>
           <BeforeAfterComparison
             originalPrompt={data.originalPrompt}
-            optimizedPrompt={data.optimizedPrompt}
+            editableOptimizedPrompt={editableOptimizedPrompt}
+            onEditableOptimizedPromptChange={
+              onEditableOptimizedPromptChange ?? (() => undefined)
+            }
+            isEditableDisabled={isEditableDisabled || !onEditableOptimizedPromptChange}
           />
         </section>
 
@@ -111,26 +136,5 @@ export function PromptResult({ data }: PromptResultProps) {
         </section>
       </div>
     </article>
-  );
-}
-
-function toCopyablePromptBody(optimizedPrompt: string): string {
-  return optimizedPrompt
-    .split(/\r?\n/)
-    .filter((line) => !isStructuredHeading(line))
-    .join("\n")
-    .trim();
-}
-
-function isStructuredHeading(line: string): boolean {
-  const normalized = line.trim().toLowerCase();
-  return (
-    normalized === "## task" ||
-    normalized === "## context" ||
-    normalized === "## constraints" ||
-    normalized === "## output format" ||
-    normalized === "## role" ||
-    normalized === "## tone" ||
-    normalized === "## success criteria"
   );
 }

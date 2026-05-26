@@ -1,11 +1,17 @@
+import { EditableOptimizedPrompt } from "@/components/EditableOptimizedPrompt";
+
 export type BeforeAfterComparisonProps = {
   originalPrompt: string;
-  optimizedPrompt: string;
+  editableOptimizedPrompt: string;
+  onEditableOptimizedPromptChange: (value: string) => void;
+  isEditableDisabled?: boolean;
 };
 
 export function BeforeAfterComparison({
   originalPrompt,
-  optimizedPrompt,
+  editableOptimizedPrompt,
+  onEditableOptimizedPromptChange,
+  isEditableDisabled = false,
 }: BeforeAfterComparisonProps) {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -21,11 +27,13 @@ export function BeforeAfterComparison({
         <h4 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-900">
           After
         </h4>
-        <p className="flex-1 whitespace-pre-wrap text-base leading-relaxed text-zinc-800">
-          {optimizedPrompt}
-        </p>
+        <EditableOptimizedPrompt
+          value={editableOptimizedPrompt}
+          onChange={onEditableOptimizedPromptChange}
+          disabled={isEditableDisabled}
+          id="optimized-prompt-after"
+        />
       </article>
     </div>
   );
 }
-

@@ -11,6 +11,7 @@ export type WeakPromptTextAreaProps = {
   onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onSubmit: () => void;
   isLoading?: boolean;
+  validationError?: string | null;
 };
 
 export function WeakPromptTextArea({
@@ -18,6 +19,7 @@ export function WeakPromptTextArea({
   onChange,
   onSubmit,
   isLoading = false,
+  validationError = null,
 }: WeakPromptTextAreaProps) {
   const hasValidPrompt = value.trim().length > 0;
   const isButtonDisabled = !hasValidPrompt || isLoading;
@@ -50,6 +52,15 @@ export function WeakPromptTextArea({
           maxLength={MAX_CHARACTERS}
           disabled={isLoading}
         />
+
+        {validationError && (
+          <p
+            className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900"
+            role="alert"
+          >
+            {validationError}
+          </p>
+        )}
 
         <ImproveButton
           disabled={isButtonDisabled}
