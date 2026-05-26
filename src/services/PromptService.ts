@@ -38,7 +38,7 @@ export async function improvePrompt(
   const originalScore = scorePrompt(sanitized);
   const improvedScore = scorePrompt(optimizedPrompt);
 
-  return {
+  return normalizePromptResult({
     originalPrompt: sanitized,
     optimizedPrompt,
     originalScore,
@@ -46,7 +46,7 @@ export async function improvePrompt(
     explanation: buildExplanation(originalScore, improvedScore),
     techniquesUsed,
     improvementCategories: buildImprovementCategories(sanitized, optimizedPrompt),
-  };
+  });
 }
 
 function scorePrompt(prompt: string): number {
@@ -66,6 +66,103 @@ function scorePrompt(prompt: string): number {
   return Math.min(100, score);
 }
 
+function normalizePromptResult(value: unknown): PromptResult {
+  const fallbackOriginalPrompt = "";
+  const fallbackOptimizedPrompt = "";
+
+  if (typeof value !== "object" || value === null) {
+    return {
+      originalPrompt: fallbackOriginalPrompt,
+      optimizedPrompt: fallbackOptimizedPrompt,
+      originalScore: 0,
+      improvedScore: 0,
+      explanation: "Optimization result was incomplete. Please try again.",
+      techniquesUsed: [],
+      improvementCategories: [],
+    };
+  }
+
+  const record = value as Record<string, unknown>;
+
+  const originalPrompt =
+    typeof record.originalPrompt === "string" ? record.originalPrompt.trim() : "";
+
+  const optimizedPromptRaw =
+    typeof record.optimizedPrompt === "string" ? record.optimizedPrompt.trim() : "";
+
+  const optimizedPrompt =
+    optimizedPromptRaw !== ""
+      ? optimizedPromptRaw
+      : originalPrompt !== ""
+        ? originalPrompt
+        : fallbackOptimizedPrompt;
+
+  const originalScore = clampScore(record.originalScore);
+  const improvedScore = clampScore(record.improvedScore);
+
+  const explanation =
+    typeof record.explanation === "string" && record.explanation.trim() !== ""
+      ? record.explanation.trim()
+      : "This is a placeholder optimization. OpenAI integration will be added later.";
+
+  const techniquesUsed = isStringArray(record.techniquesUsed)
+    ? record.techniquesUsed.map((t) => t.trim()).filter(Boolean)
+    : [];
+
+  const improvementCategories = normalizeImprovementCategories(
+    record.improvementCategories,
+  );
+
+  return {
+    originalPrompt,
+    optimizedPrompt,
+    originalScore,
+    improvedScore,
+    explanation,
+    techniquesUsed,
+    improvementCategories,
+  };
+}
+
+function clampScore(value: unknown): number {
+  if (typeof value !== "number" || Number.isNaN(value)) return 0;
+  if (!Number.isFinite(value)) return 0;
+  return Math.max(0, Math.min(100, Math.round(value)));
+}
+
+function isStringArray(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every((item) => typeof item === "string");
+}
+
+function normalizeImprovementCategories(
+  value: unknown,
+): PromptImprovementCategory[] {
+  if (!Array.isArray(value)) return [];
+
+  return value
+    .map((item) => {
+      if (typeof item !== "object" || item === null) return null;
+      const record = item as Record<string, unknown>;
+
+      const name = typeof record.name === "string" ? record.name.trim() : "";
+      const description =
+        typeof record.description === "string" ? record.description.trim() : "";
+
+      const impact = normalizeImpact(record.impact);
+
+      if (!name || !description) return null;
+      return { name, description, impact };
+    })
+    .filter((item): item is PromptImprovementCategory => item !== null);
+}
+
+function normalizeImpact(
+  value: unknown,
+): PromptImprovementCategory["impact"] {
+  if (value === "low" || value === "medium" || value === "high") return value;
+  return "low";
+}
+
 function buildImprovementCategories(
   originalPrompt: string,
   optimizedPrompt: string,
@@ -80,7 +177,10 @@ function buildImprovementCategories(
       name: "Clarity",
       description:
         "Clarifies the main task so the AI understands what outcome is expected.",
-      impact:  impactForSignal(TASK_PATTERN.test(original), TASK_PATTERN.test(optimized)),
+      impact: impactForSignal(
+        TASK_PATTERN.test(original),
+        TASK_PATTERN.test(optimized),
+      ),
     },
     {
       name: "Context",
