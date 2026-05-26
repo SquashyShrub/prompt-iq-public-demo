@@ -2,19 +2,133 @@
 
 All notable changes to this project will be documented in this file.
 
+---
+
 # [Unreleased]
 
 Planned:
-- Real OpenAI Responses API integration
-- Editable optimized prompt results
-- Local/session prompt history
-- Expanded prompt engineering techniques
-- Score explanation info button
-- Improved copy behavior for optimized prompts
+- Browser Extension MVP
+- Extension-side workflow injection
+- Real-time prompt coaching
+- Public alpha user testing
+- UI/UX polish refinement
+- Production deployment hardening
+- Multi-model experimentation
+- Extension-ready API contracts
+- Advanced prompt scoring refinement
 
 ---
 
-Staged:
+## [0.5.0-beta] - TBD
+
+Planned
+
+AI Integration:
+- Real OpenAI Responses API integration
+- Structured live optimization workflow
+- Real AI-generated educational explanations
+- Real prompt improvement generation
+- AI response normalization and stabilization
+
+Testing:
+- Closed alpha user testing
+- UX workflow validation
+- Prompt quality benchmarking
+- Scoring consistency refinement
+- Feedback-driven iteration
+
+Deployment:
+- Vercel deployment
+- Production environment configuration
+- Public MVP availability
+
+Architecture:
+- Shared response contract stabilization
+- Improved fallback handling
+- Improved optimization consistency
+- Extension-ready backend structure
+
+Browser Extension Preparation:
+- Shared API response handling
+- Prompt workflow integration preparation
+- Extension-side architecture planning
+
+---
+
+## [0.4.0-alpha] - 2026-05-26
+
+Added
+
+App:
+- Added editable optimized prompt workflow
+- Added editable optimized prompt textarea behavior
+- Added local prompt history sidebar
+- Added localStorage persistence for recent optimizations
+- Added history restoration workflow
+- Added “Clear History” workflow
+- Added prompt score information tooltip
+- Added lightweight prompt validation heuristics
+- Added live optimized prompt score recalculation
+- Added deterministic “Try Again” optimization variants
+- Added optimization attempt tracking system
+- Added variant cycling behavior
+- Added improved copy-only optimized prompt workflow
+
+Optimization Engine:
+- Added balanced optimization style
+- Added detailed instructional optimization style
+- Added concise action-oriented optimization style
+- Added role-based expert optimization style
+- Added score stabilization logic
+- Added duplicate structured-section prevention
+- Added prompt technique-aware optimization logic
+
+Validation:
+- Added lightweight English/relevance validation
+- Added gibberish/random-character detection heuristics
+- Added structured prompt validation safeguards
+
+Updated
+
+UI:
+- Moved local history sidebar to responsive left-side layout
+- Improved editable optimized prompt UX
+- Improved responsive sidebar layout
+- Improved result workflow polish
+- Improved prompt score UX
+
+Optimization:
+- Updated deterministic optimization workflow to produce meaningfully distinct variants
+- Updated optimization techniques so displayed techniques reflect actual generated structure
+- Updated score recalculation workflow for edited optimized prompts
+
+Fixed
+
+UI:
+- Fixed history tile overflow behavior
+- Fixed copy button copying metadata/headings
+- Fixed weak “Try Again” differentiation
+
+Validation:
+- Prevented invalid/gibberish prompt optimization requests
+- Prevented malformed structured prompt duplication
+
+Technical
+
+Architecture:
+- Expanded PromptRequest attempt-tracking support
+- Added previousImprovedScore stabilization support
+- Added reusable validation utility layer
+- Improved local prompt persistence handling
+- Improved client-side score synchronization
+
+Validation:
+- npm run check ✅
+- npm run dev ✅
+- Manual variant workflow testing completed
+- Structured prompt reuse validated
+
+---
 
 ## [0.3.0-dev] - 2026-05-23
 
@@ -28,14 +142,27 @@ App:
 - Added before/after comparison UI
 - Added prompt improvement categories
 - Added structured AI response format
+- Added deterministic placeholder optimization workflow
+
+Optimization:
+- Added prompt scoring system
+- Added prompt score comparison workflow
+- Added optimization explanations
+- Added optimization technique tracking
 
 Updated
 
 App:
-- Updated PromptResult to display scores, explanation, techniques, categories, and comparison
+- Updated PromptResult to display scores, explanations, techniques, categories, and comparison
 - Updated placeholder optimization workflow so displayed techniques match generated prompt structure
 - Updated ImproveButton and PromptInput for interactive testing
 - Updated EmptyResultsArea to support result, loading, and error states
+
+Architecture:
+- Improved service-layer optimization structure
+- Improved result formatting workflow
+
+---
 
 ## [0.2.0] - 2026-05-22
 
@@ -49,18 +176,24 @@ Backend:
 - Created PromptService
 - Created OpenAIService placeholder boundary
 - Added deterministic prompt scoring system
-- Added explanation output
+- Added explanation output structure
 - Added prompt engineering techniques metadata
+
+Architecture:
+- Added layered service architecture:
+  Frontend → API Route → PromptService → OpenAIService
 
 Updated
 
 Backend:
 - Refactored API route to use service-layer workflow
-- Preserved placeholder OpenAI behavior with no real model calls
+- Preserved placeholder OpenAI behavior with no live model calls
 
 Tooling:
 - Added PowerShell-safe validation scripts
 - Updated ESLint ignores for generated files
+
+---
 
 ## [0.1.0] - 2026-05-22
 
@@ -69,7 +202,7 @@ Added
 App:
 - Initialized Next.js project foundation with TypeScript
 - Configured Tailwind CSS
-- Created Phase 1 folder structure
+- Created initial Phase 1 folder structure
 - Added landing heading section
 - Added weak prompt input section
 - Added reusable improve button
@@ -91,6 +224,8 @@ App:
 - Updated home page to render the full Phase 1 UI flow:
   LandingHeading → WeakPromptTextArea → EmptyResultsArea
 
+---
+
 ## [0.0.0] - 2026-05-18
 
 Added
@@ -98,6 +233,9 @@ Added
 Docs:
 - DESIGN.md
 - STRATEGY.md
+- Initial roadmap planning
+- Initial architecture planning
+- Initial feature planning
 
 Updated
 
