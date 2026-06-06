@@ -1,3 +1,6 @@
+import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { primaryButtonClasses } from "@/components/buttonStyles";
+
 export type ImproveButtonProps = {
   disabled?: boolean;
   isLoading?: boolean;
@@ -22,9 +25,15 @@ export function ImproveButton({
       disabled={isDisabled}
       onClick={onClick}
       aria-busy={isLoading}
-      className={`w-full rounded-lg bg-zinc-900 px-6 py-3 text-sm font-medium text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 enabled:hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:self-start ${className}`.trimEnd()}
+      className={`inline-flex w-full items-center justify-center gap-2 sm:w-auto sm:self-start ${primaryButtonClasses} ${className}`.trim()}
     >
-      {buttonLabel}
+      {isLoading && (
+        <LoadingSpinner
+          size="sm"
+          className="border-white/30 border-t-white"
+        />
+      )}
+      <span>{buttonLabel}</span>
     </button>
   );
 }

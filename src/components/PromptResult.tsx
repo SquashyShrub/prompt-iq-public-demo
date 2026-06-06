@@ -53,7 +53,7 @@ export function PromptResult({
   const afterScore = displayImprovedScore ?? data.improvedScore;
 
   return (
-    <article className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
+    <article className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm transition-opacity duration-300">
       <header className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex items-center gap-2">
           <ScoreInfoTooltip />
