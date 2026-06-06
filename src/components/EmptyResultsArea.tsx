@@ -33,14 +33,14 @@ export function EmptyResultsArea({
 
   return (
     <section
-      className="px-6 pb-16 pt-0 sm:px-8"
+      className="pb-2 sm:pb-4"
       aria-labelledby="results-section-heading"
       aria-busy={isLoading}
     >
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-5">
         <h2
           id="results-section-heading"
-          className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl"
+          className="text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl"
         >
           Results
         </h2>

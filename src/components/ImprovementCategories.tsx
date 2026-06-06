@@ -29,7 +29,7 @@ export function ImprovementCategories({
       {categories.map((category) => (
         <li
           key={category.name}
-          className="flex flex-col gap-2 rounded-lg border border-zinc-200 bg-white p-4"
+          className="flex flex-col gap-2 rounded-lg border border-zinc-200/80 bg-zinc-50/50 p-4"
         >
           <div className="flex flex-wrap items-center justify-between gap-2">
             <h4 className="text-sm font-semibold text-zinc-900">

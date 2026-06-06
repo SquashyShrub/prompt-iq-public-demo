@@ -8,7 +8,7 @@ export function ScoreBadge({ score, label = "Score" }: ScoreBadgeProps) {
     score !== undefined ? `${label}: ${score}/100` : `${label}: --`;
 
   return (
-    <span className="inline-flex items-center rounded-md border border-zinc-200 bg-zinc-50 px-2.5 py-1 text-xs font-medium text-zinc-700">
+    <span className="inline-flex items-center rounded-md border border-zinc-200 bg-zinc-50 px-2.5 py-1 text-xs font-medium text-zinc-800">
       {displayLabel}
     </span>
   );

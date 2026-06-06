@@ -198,7 +198,7 @@ export function PromptOptimizer() {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 lg:flex-row lg:items-start lg:gap-8">
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 pb-8 sm:px-8 sm:pb-10 lg:flex-row lg:items-start lg:gap-10">
       <PromptHistorySidebar
         history={history}
         activeId={activeHistoryId}

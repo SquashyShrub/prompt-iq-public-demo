@@ -1,7 +1,7 @@
 export function ResultsSkeleton() {
   return (
     <article
-      className="animate-pulse rounded-lg border border-zinc-200 bg-white p-6 shadow-sm"
+      className="animate-pulse rounded-xl border border-zinc-200/80 bg-white p-5 shadow-sm sm:p-6"
       aria-hidden="true"
     >
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
