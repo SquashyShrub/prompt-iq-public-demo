@@ -1,7 +1,7 @@
 # PromptIQ
 
-Current Version: v0.4.0-alpha  
-Last Updated: 2026-05-26
+Current Version: v0.5.0-alpha  
+Last Updated: 2026-06-06
 
 PromptIQ is an AI-assisted prompt optimization platform that helps users transform weak prompts into structured, higher-performing prompts while teaching prompt engineering principles.
 
@@ -12,19 +12,23 @@ PromptIQ is an AI-assisted prompt optimization platform that helps users transfo
 - Phase 1: Complete
 - Phase 2: Complete
 - Phase 3: Complete
-- Deployment and Polish: In Progress
-- Browser Extension MVP: Planning Phase
+- Deployment and Polish: Complete
+
+Live Demo:
+[https://prompt-iq-public-demo.vercel.app/]
 
 ---
 
 ## Core Features
 
 ### Prompt Optimization
-- Analyze weak prompts
-- Generate structured optimized prompts
-- Deterministic optimization workflow
-- Multiple optimization variants via “Try Again”
-
+- Prompt submission interface
+- Structured prompt generation
+- Before/After comparison
+- Prompt scoring system
+- Improvement categories
+- Prompt engineering technique explanations
+  
 ### Prompt Intelligence
 - Prompt scoring system
 - Score improvement tracking
@@ -37,14 +41,13 @@ PromptIQ is an AI-assisted prompt optimization platform that helps users transfo
   - role assignment
   - formatting
 
-### User Workflow Features
-- Before/After comparison UI
-- Editable optimized prompt
-- Copy optimized prompt workflow
-- Local prompt history sidebar
-- Restore previous optimization sessions
-- Lightweight prompt validation
+### User Experience
+- Loading states
 - Friendly error handling
+- Prompt history
+- Editable optimized prompts
+- Copy Improved Prompt
+- Try Again variations
 
 ---
 
@@ -60,6 +63,15 @@ PromptIQ is an AI-assisted prompt optimization platform that helps users transfo
 - Responsive UI foundation
 
 ---
+## Screenshots
+
+### Landing Page
+
+### Before / After Comparison
+
+### Prompt History
+
+---
 
 ## Tech Stack
 
@@ -71,85 +83,67 @@ PromptIQ is an AI-assisted prompt optimization platform that helps users transfo
 ### Backend
 - Next.js API Routes
 
-### Planned AI Integration
-- OpenAI Responses API
+### Architecture
+- Component-driven UI architecture
+- PromptService business layer
+- OpenAIService abstraction layer
+- Structured optimization workflow
 
 ### Development Environment
 - Cursor IDE
 - VSCode
 - GitHub
-- Codex
 
 ### Deployment
-- Vercel (planned)
+- Vercel
 
 ---
 
 ## Current Architecture
 
 Frontend UI
-
-↓
-
-API Route (/api/improve-prompt)
-
-↓
-
-PromptService
-
-↓
-
-OpenAIService
-
-↓
-
-Optimization Engine
+└── API Route (/api/improve-prompt)
+    └── PromptService
+        └── OpenAIService
+            └── Optimization Engine
 
 ---
 
 ## Current Development Notes
 
-PromptIQ currently uses deterministic placeholder optimization logic while frontend workflows, prompt scoring, structured outputs, and educational feedback systems are stabilized.
+This public release demonstrates the complete PromptIQ MVP workflow, including prompt optimization, scoring, educational feedback, prompt history, and UI polish.
 
-Live OpenAI Responses API integration is planned after foundational workflow validation and user testing.
-
----
-
-## Upcoming Priorities
-
-### Product Polish & Deployment
-- UI/UX polish
-- Responsive refinement
-- Deployment preparation
-- Production testing
-- User testing feedback integration
-
-### Browser Extension MVP
-- ChatGPT workflow integration
-- Inline prompt optimization
-- Real-time prompt guidance
-- Extension-side workflow validation
+The optimization engine currently uses deterministic placeholder logic while future development explores deeper AI-assisted optimization workflows.
 
 ---
 
-## MVP Goals
+## Testing
 
-The current MVP focuses on:
-- AI prompt optimization
-- Educational prompt engineering feedback
-- Workflow simplicity
-- Lightweight architecture
-- Extension-ready infrastructure
+PromptIQ includes unit tests covering:
 
-The MVP intentionally excludes:
-- authentication
-- databases
-- payments
-- cloud persistence
-- enterprise features
+- Very long prompt handling
+- Empty prompt validation
+- Very short prompt optimization
+- API failure and fallback behavior
 
----
+Validation Commands:
 
+```bash
+npm run check
+npm run test:run
+```
+
+## Lessons Learned
+
+PromptIQ was built to explore:
+
+- Next.js application architecture
+- TypeScript-driven development
+- Service-layer design patterns
+- Prompt engineering workflows
+- AI-assisted product development
+- Modern deployment pipelines
+- 
 ## Long-Term Vision
 
 PromptIQ aims to become a lightweight AI communication assistant that helps users improve prompt quality directly within real-world AI workflows.
