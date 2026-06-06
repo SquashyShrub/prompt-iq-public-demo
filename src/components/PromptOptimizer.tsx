@@ -15,6 +15,7 @@ import {
 
 const MAX_CHARACTERS = 500;
 const SCORE_DEBOUNCE_MS = 300;
+const MIN_LOADING_MS = 1000;
 
 function isPromptResult(value: unknown): value is PromptResult {
   if (typeof value !== "object" || value === null) return false;
@@ -108,6 +109,7 @@ export function PromptOptimizer() {
 
     setIsLoading(true);
     setError(null);
+    const loadingStartedAt = Date.now();
 
     try {
       const response = await fetch("/api/improve-prompt", {
@@ -170,6 +172,11 @@ export function PromptOptimizer() {
       setDisplayImprovedScore(null);
       setError(toFriendlyUserMessage(error));
     } finally {
+      const elapsed = Date.now() - loadingStartedAt;
+      const remaining = Math.max(0, MIN_LOADING_MS - elapsed);
+      if (remaining > 0) {
+        await new Promise((resolve) => window.setTimeout(resolve, remaining));
+      }
       setIsLoading(false);
     }
   }
