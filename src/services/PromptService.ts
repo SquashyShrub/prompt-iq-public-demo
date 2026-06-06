@@ -79,7 +79,7 @@ function stabilizeImprovedScore(
   return clampScore(stabilized);
 }
 
-function normalizePromptResult(value: unknown): PromptResult {
+export function normalizePromptResult(value: unknown): PromptResult {
   const fallbackOriginalPrompt = "";
   const fallbackOptimizedPrompt = "";
 
