@@ -8,9 +8,14 @@ import { usePromptHistory } from "@/components/usePromptHistory";
 import { scorePrompt } from "@/services/promptScoring";
 import type { PromptHistoryItem, PromptResult } from "@/types/prompt";
 import { validatePrompt } from "@/utils/promptValidation";
+import {
+  logOptimizationError,
+  toFriendlyUserMessage,
+} from "@/utils/friendlyErrors";
 
 const MAX_CHARACTERS = 500;
 const SCORE_DEBOUNCE_MS = 300;
+const MIN_LOADING_MS = 1000;
 
 function isPromptResult(value: unknown): value is PromptResult {
   if (typeof value !== "object" || value === null) return false;
@@ -104,6 +109,7 @@ export function PromptOptimizer() {
 
     setIsLoading(true);
     setError(null);
+    const loadingStartedAt = Date.now();
 
     try {
       const response = await fetch("/api/improve-prompt", {
@@ -119,25 +125,35 @@ export function PromptOptimizer() {
       const data: unknown = await response.json();
 
       if (!response.ok) {
-        const message =
+        const apiMessage =
           typeof data === "object" &&
           data !== null &&
           "error" in data &&
           typeof (data as { error: unknown }).error === "string"
             ? (data as { error: string }).error
-            : "Something went wrong. Please try again.";
+            : undefined;
+        logOptimizationError("Optimization API error", {
+          status: response.status,
+          apiMessage,
+        });
         setResult(null);
         setEditableOptimizedPrompt("");
         setDisplayImprovedScore(null);
-        setError(message);
+        setError(
+          toFriendlyUserMessage(null, {
+            status: response.status,
+            apiMessage,
+          }),
+        );
         return;
       }
 
       if (!isPromptResult(data)) {
+        logOptimizationError("Invalid optimization response shape", data);
         setResult(null);
         setEditableOptimizedPrompt("");
         setDisplayImprovedScore(null);
-        setError("Something went wrong. Please try again.");
+        setError(toFriendlyUserMessage(null));
         return;
       }
 
@@ -149,14 +165,18 @@ export function PromptOptimizer() {
 
       const entry = addToHistory(data, data.optimizedPrompt);
       setActiveHistoryId(entry.id);
-    } catch {
+    } catch (error) {
+      logOptimizationError("Optimization request failed", error);
       setResult(null);
       setEditableOptimizedPrompt("");
       setDisplayImprovedScore(null);
-      setError(
-        "Unable to connect. Please check your connection and try again.",
-      );
+      setError(toFriendlyUserMessage(error));
     } finally {
+      const elapsed = Date.now() - loadingStartedAt;
+      const remaining = Math.max(0, MIN_LOADING_MS - elapsed);
+      if (remaining > 0) {
+        await new Promise((resolve) => window.setTimeout(resolve, remaining));
+      }
       setIsLoading(false);
     }
   }
@@ -178,7 +198,7 @@ export function PromptOptimizer() {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 lg:flex-row lg:items-start lg:gap-8">
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 pb-8 sm:px-8 sm:pb-10 lg:flex-row lg:items-start lg:gap-10">
       <PromptHistorySidebar
         history={history}
         activeId={activeHistoryId}

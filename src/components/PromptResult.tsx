@@ -29,11 +29,11 @@ export function PromptResult({
 
   if (!hasResult) {
     return (
-      <article className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
+      <article className="rounded-xl border border-zinc-200/80 bg-white p-5 shadow-sm sm:p-6">
         <header className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex items-center gap-2">
             <ScoreInfoTooltip />
-            <h3 className="text-lg font-semibold tracking-tight text-zinc-900">
+            <h3 className="text-base font-semibold tracking-tight text-zinc-900 sm:text-lg">
               Optimized Prompt
             </h3>
           </div>
@@ -42,7 +42,7 @@ export function PromptResult({
             <CopyButton disabled label="Copy Improved Prompt" />
           </div>
         </header>
-        <p className="text-base leading-relaxed text-zinc-500">
+        <p className="max-w-prose text-sm leading-relaxed text-zinc-500 sm:text-base">
           Your improved prompt will appear here after optimization.
         </p>
       </article>
@@ -53,11 +53,11 @@ export function PromptResult({
   const afterScore = displayImprovedScore ?? data.improvedScore;
 
   return (
-    <article className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
-      <header className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+    <article className="rounded-xl border border-zinc-200/80 bg-white p-5 shadow-sm transition-opacity duration-300 sm:p-6">
+      <header className="mb-5 flex flex-col gap-3 sm:mb-6 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex items-center gap-2">
           <ScoreInfoTooltip />
-          <h3 className="text-lg font-semibold tracking-tight text-zinc-900">
+          <h3 className="text-base font-semibold tracking-tight text-zinc-900 sm:text-lg">
             Prompt Optimization Results
           </h3>
         </div>
@@ -72,11 +72,11 @@ export function PromptResult({
         </div>
       </header>
 
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-5 sm:gap-6">
         <section aria-labelledby="before-after-heading">
           <h4
             id="before-after-heading"
-            className="mb-3 text-sm font-semibold text-zinc-900"
+            className="mb-3 text-xs font-semibold uppercase tracking-wide text-zinc-500"
           >
             Before / After Comparison
           </h4>
@@ -94,11 +94,11 @@ export function PromptResult({
           <section aria-labelledby="explanation-heading">
             <h4
               id="explanation-heading"
-              className="mb-2 text-sm font-semibold text-zinc-900"
+              className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500"
             >
               What Changed
             </h4>
-            <p className="text-base leading-relaxed text-zinc-600">
+            <p className="max-w-prose text-sm leading-relaxed text-zinc-600 sm:text-[0.9375rem] sm:leading-7">
               {data.explanation}
             </p>
           </section>
@@ -108,7 +108,7 @@ export function PromptResult({
           <section aria-labelledby="techniques-heading">
             <h4
               id="techniques-heading"
-              className="mb-3 text-sm font-semibold text-zinc-900"
+              className="mb-3 text-xs font-semibold uppercase tracking-wide text-zinc-500"
             >
               Techniques Used
             </h4>
@@ -128,7 +128,7 @@ export function PromptResult({
         <section aria-labelledby="categories-heading">
           <h4
             id="categories-heading"
-            className="mb-3 text-sm font-semibold text-zinc-900"
+            className="mb-3 text-xs font-semibold uppercase tracking-wide text-zinc-500"
           >
             Improvement Categories
           </h4>

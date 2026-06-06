@@ -15,16 +15,16 @@ export function BeforeAfterComparison({
 }: BeforeAfterComparisonProps) {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-      <article className="flex flex-col rounded-lg border border-zinc-200 bg-zinc-50 p-4">
-        <h4 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-500">
+      <article className="flex flex-col rounded-lg border border-zinc-200/80 bg-zinc-50/80 p-4">
+        <h4 className="mb-3 text-xs font-semibold uppercase tracking-wide text-zinc-500">
           Before
         </h4>
-        <p className="flex-1 whitespace-pre-wrap text-base leading-relaxed text-zinc-800">
+        <p className="flex-1 whitespace-pre-wrap text-sm leading-relaxed text-zinc-800 sm:text-[0.9375rem] sm:leading-7">
           {originalPrompt}
         </p>
       </article>
-      <article className="flex flex-col rounded-lg border border-zinc-900 bg-white p-4 shadow-sm">
-        <h4 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-900">
+      <article className="flex flex-col rounded-lg border border-zinc-300 bg-white p-4 shadow-sm">
+        <h4 className="mb-3 text-xs font-semibold uppercase tracking-wide text-zinc-700">
           After
         </h4>
         <EditableOptimizedPrompt

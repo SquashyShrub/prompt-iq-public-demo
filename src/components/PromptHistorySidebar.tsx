@@ -32,7 +32,7 @@ export function PromptHistorySidebar({
       className="w-full min-w-0 max-w-full shrink-0 overflow-hidden lg:w-72"
       aria-label="Prompt history"
     >
-      <div className="overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-xl border border-zinc-200/80 bg-white shadow-sm">
         <div className="flex items-center justify-between gap-2 border-b border-zinc-200 px-4 py-3">
           <h2 className="truncate text-sm font-semibold text-zinc-900">History</h2>
           <button

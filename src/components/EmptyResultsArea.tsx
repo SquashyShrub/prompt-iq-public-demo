@@ -1,4 +1,7 @@
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { PromptResult } from "@/components/PromptResult";
+import { ResultsSkeleton } from "@/components/ResultsSkeleton";
+import { secondaryButtonClasses } from "@/components/buttonStyles";
 import type { PromptResult as PromptResultData } from "@/types/prompt";
 
 export type EmptyResultsAreaProps = {
@@ -30,51 +33,58 @@ export function EmptyResultsArea({
 
   return (
     <section
-      className="px-6 pb-16 pt-0 sm:px-8"
+      className="pb-2 sm:pb-4"
       aria-labelledby="results-section-heading"
       aria-busy={isLoading}
     >
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-5">
         <h2
           id="results-section-heading"
-          className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl"
+          className="text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl"
         >
           Results
         </h2>
 
         {isLoading && (
-          <p
-            className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-600"
+          <div
+            className="flex items-center gap-3 rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-600 transition-opacity duration-200"
             role="status"
           >
-            Optimizing your prompt…
-          </p>
+            <LoadingSpinner size="md" />
+            <span>Optimizing your prompt…</span>
+          </div>
         )}
 
         {error && !isLoading && (
           <p
-            className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800"
+            className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800 transition-opacity duration-300"
             role="alert"
           >
             {error}
           </p>
         )}
 
-        <PromptResult
-          data={hasResult ? result : null}
-          editableOptimizedPrompt={editableOptimizedPrompt}
-          onEditableOptimizedPromptChange={onEditableOptimizedPromptChange}
-          displayImprovedScore={displayImprovedScore}
-          isEditableDisabled={isLoading}
-        />
+        {isLoading ? (
+          <ResultsSkeleton />
+        ) : (
+          <div className="transition-opacity duration-300">
+            <PromptResult
+              data={hasResult ? result : null}
+              editableOptimizedPrompt={editableOptimizedPrompt}
+              onEditableOptimizedPromptChange={onEditableOptimizedPromptChange}
+              displayImprovedScore={displayImprovedScore}
+              isEditableDisabled={isLoading}
+            />
+          </div>
+        )}
 
         {showTryAgain && (
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3 transition-opacity duration-300">
             <button
               type="button"
               onClick={onTryAgain}
               disabled={!canTryAgain || isLoading}
-              className="rounded-lg border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-900 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 enabled:hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-50"
+              className={secondaryButtonClasses}
             >
               Try Again
             </button>
