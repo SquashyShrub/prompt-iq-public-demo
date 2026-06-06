@@ -4,62 +4,87 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-# [Unreleased]
+## [0.5.0-alpha]
 
-Planned:
-- Browser Extension MVP
-- Extension-side workflow injection
-- Real-time prompt coaching
-- Public alpha user testing
-- UI/UX polish refinement
-- Production deployment hardening
-- Multi-model experimentation
-- Extension-ready API contracts
-- Advanced prompt scoring refinement
+### Added
 
----
+#### UI & UX
+- Added loading spinner workflow
+- Added results loading skeletons
+- Added friendly error messaging system
+- Added reusable button styling utilities
+- Added responsive footer component
+- Added typography and spacing polish pass
+- Added accessibility-focused hover and focus states
 
-## [0.5.0-beta] - TBD
+#### Reliability
+- Added malformed response normalization
+- Added safe PromptResult fallback handling
+- Added score clamping safeguards
+- Added optimization response validation
 
-Planned
+#### Prompt Optimization
+- Added Copy Improved Prompt workflow
+- Added copy success and failure feedback
+- Added Try Again workflow
+- Added optimization attempt tracking
+- Added deterministic optimization variants
+- Added structured prompt reuse detection
+- Added duplicate section prevention
 
-AI Integration:
-- Real OpenAI Responses API integration
-- Structured live optimization workflow
-- Real AI-generated educational explanations
-- Real prompt improvement generation
-- AI response normalization and stabilization
+#### Testing
+- Added unit testing coverage
+- Added long prompt validation tests
+- Added short prompt validation tests
+- Added empty prompt validation tests
+- Added API failure and fallback tests
 
-Testing:
-- Closed alpha user testing
-- UX workflow validation
-- Prompt quality benchmarking
-- Scoring consistency refinement
-- Feedback-driven iteration
+### Updated
 
-Deployment:
-- Vercel deployment
-- Production environment configuration
-- Public MVP availability
+#### Optimization Engine
+- Improved variant generation quality
+- Improved technique-aware optimization structure
+- Improved score consistency between optimization variants
 
-Architecture:
-- Shared response contract stabilization
-- Improved fallback handling
-- Improved optimization consistency
-- Extension-ready backend structure
+#### UI
+- Improved prompt editing workflow
+- Improved loading-state experience
+- Improved result presentation
+- Improved responsive layout behavior
+- Improved typography, spacing, and visual hierarchy
 
-Browser Extension Preparation:
-- Shared API response handling
-- Prompt workflow integration preparation
-- Extension-side architecture planning
+#### Documentation
+- Updated README for public demo release
+- Updated deployment documentation
+- Updated architecture documentation
+- Updated project roadmap
 
----
+### Fixed
+
+#### Prompt Workflow
+- Fixed copy behavior copying metadata and section headings
+- Fixed duplicate structured prompt sections
+- Fixed weak retry differentiation
+- Fixed malformed optimization response handling
+
+#### Validation
+- Fixed edge-case prompt handling
+- Fixed fallback behavior consistency
+
+### Deployment
+
+#### Production Readiness
+- Deployed PromptIQ public demo
+- Verified production build pipeline
+- Verified unit testing pipeline
+- Verified responsive layouts across common screen sizes
+- Established public demo release baseline
 
 ## [0.4.0-alpha] - 2026-05-26
 
-Added
+### Added
 
-App:
+#### App:
 - Added editable optimized prompt workflow
 - Added editable optimized prompt textarea behavior
 - Added local prompt history sidebar
@@ -74,7 +99,7 @@ App:
 - Added variant cycling behavior
 - Added improved copy-only optimized prompt workflow
 
-Optimization Engine:
+#### Optimization Engine:
 - Added balanced optimization style
 - Added detailed instructional optimization style
 - Added concise action-oriented optimization style
@@ -83,46 +108,46 @@ Optimization Engine:
 - Added duplicate structured-section prevention
 - Added prompt technique-aware optimization logic
 
-Validation:
+#### Validation:
 - Added lightweight English/relevance validation
 - Added gibberish/random-character detection heuristics
 - Added structured prompt validation safeguards
 
-Updated
+### Updated
 
-UI:
+#### UI:
 - Moved local history sidebar to responsive left-side layout
 - Improved editable optimized prompt UX
 - Improved responsive sidebar layout
 - Improved result workflow polish
 - Improved prompt score UX
 
-Optimization:
+#### Optimization:
 - Updated deterministic optimization workflow to produce meaningfully distinct variants
 - Updated optimization techniques so displayed techniques reflect actual generated structure
 - Updated score recalculation workflow for edited optimized prompts
 
-Fixed
+### Fixed
 
-UI:
+#### UI:
 - Fixed history tile overflow behavior
 - Fixed copy button copying metadata/headings
 - Fixed weak “Try Again” differentiation
 
-Validation:
+#### Validation:
 - Prevented invalid/gibberish prompt optimization requests
 - Prevented malformed structured prompt duplication
 
-Technical
+### Technical
 
-Architecture:
+#### Architecture:
 - Expanded PromptRequest attempt-tracking support
 - Added previousImprovedScore stabilization support
 - Added reusable validation utility layer
 - Improved local prompt persistence handling
 - Improved client-side score synchronization
 
-Validation:
+#### Validation:
 - npm run check ✅
 - npm run dev ✅
 - Manual variant workflow testing completed
@@ -132,9 +157,9 @@ Validation:
 
 ## [0.3.0-dev] - 2026-05-23
 
-Added
+### Added
 
-App:
+#### App:
 - Connected frontend prompt optimizer workflow to API route
 - Added loading, error, idle, and success result states
 - Displayed structured optimization results in the UI
@@ -144,21 +169,21 @@ App:
 - Added structured AI response format
 - Added deterministic placeholder optimization workflow
 
-Optimization:
+#### Optimization:
 - Added prompt scoring system
 - Added prompt score comparison workflow
 - Added optimization explanations
 - Added optimization technique tracking
 
-Updated
+### Updated
 
-App:
+#### App:
 - Updated PromptResult to display scores, explanations, techniques, categories, and comparison
 - Updated placeholder optimization workflow so displayed techniques match generated prompt structure
 - Updated ImproveButton and PromptInput for interactive testing
 - Updated EmptyResultsArea to support result, loading, and error states
 
-Architecture:
+#### Architecture:
 - Improved service-layer optimization structure
 - Improved result formatting workflow
 
@@ -166,9 +191,9 @@ Architecture:
 
 ## [0.2.0] - 2026-05-22
 
-Added
+### Added
 
-Backend:
+#### Backend:
 - Created `.env.local` support
 - Added `OPENAI_API_KEY` environment variable placeholder
 - Created `/api/improve-prompt` API route
@@ -179,17 +204,17 @@ Backend:
 - Added explanation output structure
 - Added prompt engineering techniques metadata
 
-Architecture:
+#### Architecture:
 - Added layered service architecture:
   Frontend → API Route → PromptService → OpenAIService
 
-Updated
+### Updated
 
-Backend:
+#### Backend:
 - Refactored API route to use service-layer workflow
 - Preserved placeholder OpenAI behavior with no live model calls
 
-Tooling:
+#### Tooling:
 - Added PowerShell-safe validation scripts
 - Updated ESLint ignores for generated files
 
@@ -197,9 +222,9 @@ Tooling:
 
 ## [0.1.0] - 2026-05-22
 
-Added
+### Added
 
-App:
+#### App:
 - Initialized Next.js project foundation with TypeScript
 - Configured Tailwind CSS
 - Created initial Phase 1 folder structure
@@ -208,7 +233,7 @@ App:
 - Added reusable improve button
 - Added empty results area
 
-Components:
+#### Components:
 - LandingHeading
 - WeakPromptTextArea
 - PromptInput
@@ -218,9 +243,9 @@ Components:
 - CopyButton
 - ScoreBadge
 
-Updated
+### Updated
 
-App:
+#### App:
 - Updated home page to render the full Phase 1 UI flow:
   LandingHeading → WeakPromptTextArea → EmptyResultsArea
 
@@ -228,7 +253,7 @@ App:
 
 ## [0.0.0] - 2026-05-18
 
-Added
+### Added
 
 Docs:
 - DESIGN.md
@@ -237,8 +262,5 @@ Docs:
 - Initial architecture planning
 - Initial feature planning
 
-Updated
-
-Docs:
 - README.md
 - CHANGELOG.md
